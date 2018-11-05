@@ -5,6 +5,7 @@ package in4.cloudcomputing.groupe10;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -36,19 +37,19 @@ public class AppServlet extends HttpServlet {
 	}
 	
 	public void init() throws ServletException {
-		try {
+		/*try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		DB.CONFIG_FILE_URL = getClass().getResource("db.properties").toString();
-		DB.disableTransaction();
+		DB.disableTransaction();*/
 	}
 	 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		JSONArray array = new JSONArray();
+		/*JSONArray array = new JSONArray();
 		try(ResultSet result = DB.table("messages").orderByDesc("date").get()) {
 			while(result.next()) {
 				JSONObject json = new JSONObject();
@@ -59,11 +60,13 @@ public class AppServlet extends HttpServlet {
 			}
 		} catch (JSONException | SQLException e) {
 			e.printStackTrace();
-		}
-		resp.setContentType("application/json");
+		}*/
+		//resp.setContentType("application/json");
+		resp.setContentType("text/html");
 		resp.setCharacterEncoding( "UTF-8" );
 		PrintWriter out = resp.getWriter();
-		out.print( array.toString() );
+		//out.print( array.toString() );
+		out.print("Current path:"+ Paths.get(".").toAbsolutePath().normalize().toString() );
 		out.flush();
 	
 	}
