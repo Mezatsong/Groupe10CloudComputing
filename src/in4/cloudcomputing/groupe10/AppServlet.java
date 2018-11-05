@@ -60,7 +60,7 @@ public class AppServlet extends HttpServlet {
 				LocalDateTime dt = new Timestamp(result.getLong("date")).toLocalDateTime();
 				String dateStr = num(dt.getHour())+":"+num(dt.getMinute());
 				if(dt.getDayOfYear() != now.getDayOfYear() || dt.getYear() != now.getYear()) {
-					dateStr += "  ("+num(dt.getDayOfMonth())+"-"+dt.getMonth().getDisplayName(TextStyle.SHORT, req.getLocale());
+					dateStr += " ("+num(dt.getDayOfMonth())+"-"+dt.getMonth().getDisplayName(TextStyle.SHORT, req.getLocale());
 					if(dt.getYear() != now.getYear()) {
 						dateStr += "-"+dt.getYear();
 					}
