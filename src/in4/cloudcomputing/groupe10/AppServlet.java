@@ -61,15 +61,9 @@ public class AppServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		resp.setContentType("application/json");
-		//resp.setContentType("text/html");
 		resp.setCharacterEncoding( "UTF-8" );
 		PrintWriter out = resp.getWriter();
 		out.print( array.toString() );
-		/*out.println("Current path:"+ Paths.get(".").toAbsolutePath().normalize().toString() );
-		File f = new File("/app");
-		out.println("FILES INTO /app");
-		for(File sf : f.listFiles())
-			out.println(sf.getAbsolutePath());*/
 		
 		out.flush();
 	
@@ -77,6 +71,7 @@ public class AppServlet extends HttpServlet {
 
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
@@ -84,7 +79,7 @@ public class AppServlet extends HttpServlet {
 		map.put("username", req.getParameter("username"));
 		map.put("content", req.getParameter("content"));
 		map.put("date", System.currentTimeMillis());
-		//DB.table("messages").insert(map);
+		DB.table("messages").insert(map);
 		
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding( "UTF-8" );
