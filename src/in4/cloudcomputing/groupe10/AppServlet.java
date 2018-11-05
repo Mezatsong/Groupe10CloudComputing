@@ -3,12 +3,10 @@
  */
 package in4.cloudcomputing.groupe10;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 //import ben.ladalja.DB;
@@ -66,7 +62,12 @@ public class AppServlet extends HttpServlet {
 		resp.setCharacterEncoding( "UTF-8" );
 		PrintWriter out = resp.getWriter();
 		//out.print( array.toString() );
-		out.print("Current path:"+ Paths.get(".").toAbsolutePath().normalize().toString() );
+		out.println("Current path:"+ Paths.get(".").toAbsolutePath().normalize().toString() );
+		File f = new File("/app");
+		out.println("FILES INTO /app");
+		for(File sf : f.listFiles())
+			out.println(sf.getAbsolutePath());
+		
 		out.flush();
 	
 	}
