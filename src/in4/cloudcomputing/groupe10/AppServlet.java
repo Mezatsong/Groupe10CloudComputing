@@ -21,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ben.ladalja.DB;
+//import ben.ladalja.DB;
 
 /**
  * 
@@ -81,7 +81,7 @@ public class AppServlet extends HttpServlet {
 		map.put("username", req.getParameter("username"));
 		map.put("content", req.getParameter("content"));
 		map.put("date", System.currentTimeMillis());
-		DB.table("messages").insert(map);
+		//DB.table("messages").insert(map);
 		
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding( "UTF-8" );
