@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,12 +51,22 @@ public class AppServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		JSONArray array = new JSONArray();
-		try(ResultSet result = DB.table("messages").orderByDesc("date").get()) {
+		LocalDateTime now = LocalDateTime.now();
+		try(ResultSet result = DB.table("messages").orderBy("date").get()) {
 			while(result.next()) {
 				JSONObject json = new JSONObject();
 				json.put("username", result.getString("username"));
 				json.put("content", result.getString("content"));
-				json.put("date", new Timestamp(result.getLong("date")).toLocalDateTime().toString());
+				LocalDateTime dt = new Timestamp(result.getLong("date")).toLocalDateTime();
+				String dateStr = dt.getHour()+":"+dt.getMinute();
+				if(dt.getDayOfYear() != now.getDayOfYear() || dt.getYear() != now.getYear()) {
+					dateStr += "  ("+dt.getDayOfMonth()+"-"+dt.getMonth().getDisplayName(TextStyle.SHORT, req.getLocale());
+					if(dt.getYear() != now.getYear()) {
+						dateStr += "-"+dt.getYear();
+					}
+					dateStr +=")";
+				}
+				json.put("date", dateStr);
 				array.put(json);
 			}
 		} catch (JSONException | SQLException e) {
@@ -76,6 +88,7 @@ public class AppServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		Map<String,Object> map = new HashMap<>();
+		
 		map.put("username", req.getParameter("username"));
 		map.put("content", req.getParameter("content"));
 		map.put("date", System.currentTimeMillis());
