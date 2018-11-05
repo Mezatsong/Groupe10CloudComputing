@@ -58,9 +58,9 @@ public class AppServlet extends HttpServlet {
 				json.put("username", result.getString("username"));
 				json.put("content", result.getString("content"));
 				LocalDateTime dt = new Timestamp(result.getLong("date")).toLocalDateTime();
-				String dateStr = dt.getHour()+":"+dt.getMinute();
+				String dateStr = num(dt.getHour())+":"+num(dt.getMinute());
 				if(dt.getDayOfYear() != now.getDayOfYear() || dt.getYear() != now.getYear()) {
-					dateStr += "  ("+dt.getDayOfMonth()+"-"+dt.getMonth().getDisplayName(TextStyle.SHORT, req.getLocale());
+					dateStr += "  ("+num(dt.getDayOfMonth())+"-"+dt.getMonth().getDisplayName(TextStyle.SHORT, req.getLocale());
 					if(dt.getYear() != now.getYear()) {
 						dateStr += "-"+dt.getYear();
 					}
@@ -79,6 +79,11 @@ public class AppServlet extends HttpServlet {
 		
 		out.flush();
 	
+	}
+	
+	
+	private String num(int num) {
+		return ((num < 10)?"0":"")+String.valueOf(num);
 	}
 
 	
